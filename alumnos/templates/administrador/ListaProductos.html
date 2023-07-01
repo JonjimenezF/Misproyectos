@@ -8,7 +8,7 @@
     <title>Mantenedor de productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
@@ -49,6 +49,17 @@
         </div>
     </nav>
     <main class="main">
+        {% if messages %}
+        {% for m in messages %}
+            <script>
+                Swal.fire({
+                    "title": "Felicitaciones",
+                    "text": "{{m}}",
+                    "icon": "success"
+                })
+            </script>
+        {% endfor %}
+        {% endif %}
         <div class="container-sm">
             <br>
             <div class="container overflow-hidden px-4" id="Informacion">
@@ -69,7 +80,7 @@
                             <h2>Listado de productos:</h2>
                         </div>
                         <div class="col-4 col-sm-2">
-                            <a class="btn btn-primary" href="#">+ Agregar</a>
+                            <a class="btn btn-primary" href="AgregarProducto">+ Agregar</a>
                         </div>
                         <hr>
                         <div>
@@ -94,7 +105,7 @@
                                         {% else %}
                                             <td><img src="" title="Sin imagen" class="img-producto-sm"></td>
                                         {% endif %}
-                                        <td><a href="#" class="btn btn-primary me-2">Editar</a><a href="#" class="btn btn-danger">Borrar</a></td>
+                                        <td><a href="EditarProducto/{{prod.id_prod}}" class="btn btn-primary me-2">Editar</a><a href="EliminarProducto/{{prod.id_prod}}" class="btn btn-danger">Borrar</a></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
