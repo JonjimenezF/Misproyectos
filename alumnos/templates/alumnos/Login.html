@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PETSHOP/Iniciar Sesión</title>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="CSS/CSS.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+            integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'alumnos/css/CSS.css' %}">
+    <link rel="stylesheet" href="{% static 'alumnos/css/RL.css' %}">
+</head >
+
+<body background="{% static 'alumnos/css/Fondo.jfif' %}">
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="index">PETSHOP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="box">
+                    <input type="text" name="search" placeholder="Buscar" class="src" autocomplete="off">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Login">CUENTA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Registrarse">REGISTRARSE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index#contacto">CONTACTO</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <img src="{% static 'alumnos/img/shopping-cart-empty-side-view.png' %}" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- formulario Login-->
+    <div class="body" >
+        <div class="container">
+            <div class="header">
+                <h2>Iniciar Sesión</h2>
+            </div>
+            <form id="form" class="form">
+                <div class="form-control">
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="Correo Electronico" id="email" />
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error message</small>
+                </div>
+                <div class="form-control">
+                    <label for="password">Contraseña</label>
+                    <input type="password" placeholder="Ingrese su contraseña" id="password"/>
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error message</small>
+                </div>
+                <button>Iniciar Sesión</button>
+                <p>¿No tienes una cuenta? <a class="link" href="Registrarse.html">Registrate </a></p>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'alumnos/js/ValidacionLogin.js' %}"></script>
+</body>
+
+</html>

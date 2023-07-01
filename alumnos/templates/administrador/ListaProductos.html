@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantenedor de productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+        <a class="navbar-brand ms-4" href="index">PETSHOP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <p class="mb-0 pt-2">Bienvenido, {{ request.user.username }}</p>
+                    </li>
+                
+                    {% if request.user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Mantenedor">MANTENEDOR</a>
+                        </li>
+                    {% endif %}
+                
+                <!-- Contenido para usuarios autenticados -->
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="Login">CUENTA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Registrarse">REGISTRARSE</a>
+                    </li>
+                {% endif %}
+
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#contacto">CONTACTO</a>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+    <main class="main">
+        <div class="container-sm">
+            <br>
+            <div class="container overflow-hidden px-4" id="Informacion">
+                <div class="row gx-5">
+                    <div class="col-12">
+                        <div class="p-3 border bg-light" style="text-align: center;">
+                            <h1>Productos</h1>
+                            <p>Borra o edita los productos que requieras desde esta p&aacute;gina.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="container">
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-8 col-sm-10">
+                            <h2>Listado de productos:</h2>
+                        </div>
+                        <div class="col-4 col-sm-2">
+                            <a class="btn btn-primary" href="#">+ Agregar</a>
+                        </div>
+                        <hr>
+                        <div>
+                            <table border=2 class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID Producto</th>
+                                        <th>Nombre Producto</th>
+                                        <th>Precio</th>
+                                        <th>Imagen</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for prod in productos %}
+                                    <tr>
+                                        <td>{{prod.id_prod}}</td>
+                                        <td>{{prod.nombre_prod}}</td>
+                                        <td>{{prod.precio_prod}}</td>
+                                        {% if prod.img_prod %}
+                                            <td><img src="{{prod.img_prod.url}}" title="{{prod.img_prod.name}}" style="height:70px;"></td>
+                                        {% else %}
+                                            <td><img src="" title="Sin imagen" class="img-producto-sm"></td>
+                                        {% endif %}
+                                        <td><a href="#" class="btn btn-primary me-2">Editar</a><a href="#" class="btn btn-danger">Borrar</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-light text-center py-3">
+        <div class="container" id="contacto">
+            <div class="row">
+                <div class="col-md-4 order-md-1">
+                    <img src="{% static 'alumnos/img/phone-call.png' %}" alt="">
+                    <p>+569 12345678</p>
+                    <p>+569 87654321 </p>
+                </div>
+
+                <div class="col-md-4 order-md-1">
+                    <img src="{% static 'alumnos/img/mail.png' %}" alt="">
+                    <p>petshop@gmail.com</p>
+                </div>
+                <div class="col-md-4 order-md-1">
+                    <a href="https://es-la.facebook.com/">
+                        <img src="{% static 'alumnos/img/facebook.png' %}"alt="">
+                    </a>
+                    <a href="https://www.instagram.com/">
+                        <img src="{% static 'alumnos/img/instagram.png' %}" alt="">
+                    </a>
+                    <a href="https://web.whatsapp.com/">
+                        <img src="{% static 'alumnos/img/whatssapp-big-logo.png' %}" alt="">
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </footer>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'alumnos/css/CSS.css' %}">
+    
+</head>
+
+
+<body background="{% static 'alumnos/css/Fondo.jfif' %}">
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="/index">PETSHOP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="box">
+                    <input type="text" name="search" placeholder="Buscar" class="src" autocomplete="off">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Login">CUENTA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Registrarse">REGISTRARSE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index#contacto">CONTACTO</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <img src="{% static 'alumnos/img/shopping-cart-empty-side-view.png' %}" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            {% if producto != null %}
+            <div class="col-md-6 order-md-1">
+                <img src="{{ producto.img_prod.url }}" alt="{{ producto.img.name }}">
+            </div>
+            <div class="col-md-6 order-md-2">
+                <h2>{{producto.nombre_prod}}</h2>
+                <h3>${{producto.precio_prod}}</h2>
+                    <h3>Sterilized Hairball</h3>
+                    <p>Facilita la evacuaciÃ³n de las bolas de pelo a travÃ©s del tracto digestivo gracias al
+                        contenido especÃ­fico de fibra vegetal que a su vez favorece la saciedad y el control del
+                        apetito y a mantener la funciÃ³n intestinal saludable.</p>
+
+                    <p>GOSBI CAT ORIGINAL STERILIZED HAIRBALL es un alimento completo para gatos adultos a partir de
+                        los 12 meses, adecuado para el control de las bolas de pelo y el buen trÃ¡nsito intestinal.
+                        Su valor energÃ©tico es de 371 kcal/100g (calculado segÃºn NRC 2006a).</p>
+                    <h3>Composición: </h3>
+                    <p>proteína de pollo deshidratada (26%), arroz (min. 20%), trigo integral, cebada integral,
+                        grasa de pollo, maí­z, pescado deshidratado, aceite de salmón, guisantes, pulpa de
+                        remolacha, fibra vegetal, levadura de cerveza, manzana deshidratada, extracto de malta,
+                        sustancias minerales, extracto de yuca, algas marinas, romero. </p>
+                    <h3>Componentes analí­ticos:</h3>
+                    <p> proteí­na bruta: 33%, aceites y grasa brutos: 14%, materia inorgánica: 7%, fibra bruta: 6%,
+                        humedad: 7%, calcio: 1,1%, fósforo: 0,9%, sodio: 0,5%, omega 3: 0,6%, omega 6: 2,9%. </p>
+                    <h3>Aditivos nutricionales (aditivos/kg): vitamina A (3a672a): </h3>
+                    <p> 22.000 UI, vitamina D3 (3a671): 1.600 UI, vitamina E (3a700) (alfa-tocoferol): 150 mg,
+                        taurina (3a370): 1.200 mg, DL-Metionina (2b17027): 250 mg, hierro (3b101): 105 mg (245 mg
+                        Carbonato de hierro (II)), iodo (3b201): 2,5 mg (3 mg yoduro potásico), cobre (3b405): 10
+                        mg (43 mg sulfato cÃºprico pentahidratado), manganeso (3b502): 35 mg (80 mg Ã³xido
+                        manganoso), zinc (3b603): 75 mg (95 mg óxido de zinc), zinc (3b606): 15 mg (150 mg quelato
+                        de zinc de aminoácidos): Se (E8): 0,2 mg (0,45 mg selenito de sodio). Aditivos
+                        tecnológicos: acidificantes y antioxidantes naturales.</p>
+                    <div class="d-grid gap-3 col-10 mx-auto">
+                        <button class="btn btn-dark" type="button">Comprar ahora</button>
+                        <button class="btn btn-outline-dark" type="button">Agregar al carrito</button>
+                    </div>
+
+            </div>
+            {%else %}
+            <p>No se encontro producto</p>
+            {%endif%}
+        </div>
+    </div>
+</body>
+
+</html>

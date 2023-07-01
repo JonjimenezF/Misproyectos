@@ -1,0 +1,194 @@
+<!--Integrantes-->
+<!--Jonathan Jimenez-->
+<!--Daniela Poblete-->
+<!--Diego Cabrera-->
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+
+<head>
+
+    <title>PETSHOP</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'alumnos/css/CSS.css' %}">
+
+</head>
+
+<body background="{% static 'alumnos/css/Fondo.jfif' %}">
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+        <a class="navbar-brand" href="index">PETSHOP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="box">
+                    <input type="text" name="search" placeholder="Buscar" class="src" autocomplete="off">
+                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <p class="mb-0 pt-2">Bienvenido, {{ request.user.username }}</p>
+                    </li>
+                
+                    {% if request.user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Mantenedor">MANTENEDOR</a>
+                        </li>
+                    {% endif %}
+                
+                <!-- Contenido para usuarios autenticados -->
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="Login">CUENTA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Registrarse">REGISTRARSE</a>
+                    </li>
+                {% endif %}
+
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#contacto">CONTACTO</a>
+                </li>
+                <li class="nav-item">
+                    <!--Carrito -->
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <img src="{% static 'alumnos/img/shopping-cart-empty-side-view.png' %}"
+                                        class="dropdown-toggle img-fluid" id="dropdown01" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false"></img>
+                                    <div id="carrito" class="dropdown-menu dropwdown-menu-right">
+                                        <table id="lista-carrito" class="table dropdown-item">
+                                            <thead>
+                                                <tr>
+                                                    <th>Imagen</th>
+                                                    <th>Nombre</th>
+                                                    <th>Precio</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="productos-carrito"><!--Aqui se agregan los productos -->
+                                                
+                                            </tbody>
+                                        </table>
+                                        <b class="m-4" id="precioFinal"></b><!--Total de la compra-->
+                                        <a id="vaciar-carrito" class="btn btn-dark  btn-block dropdown-item" onclick="limpiarCarrito()">Vaciar Carrito</a>
+                                        <a id="procesar-pedido" class="btn btn-danger btn-block dropdown-item">Procesar Compra </a>
+                                            
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!--Carrusel de imágenes -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'alumnos/img/Carrusel/1.webp' %}" class="d-block w-100" alt="Imagen 1">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'alumnos/img/Carrusel/2.webp' %}" class="d-block w-100" alt="Imagen 2">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'alumnos/img/Carrusel/3.webp' %}" class="d-block w-100" alt="Imagen 3">
+                <div class="carousel-caption d-none d-md-block">
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>
+    </div>
+    
+    <!-- Sección de Productos -->
+    <section class="container my-3">
+        <h2 class="text-center">Productos</h2>
+        <div class="row mt-5 ">
+            {% for producto in productos %}
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100" id="Producto_{{producto.id_prod}}">
+                    <a href="Producto/{{producto.id_prod}}">
+                        <img src="{{producto.img_prod.url}}" alt="{{producto.img_prod.name}}"class="card-img-top">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{producto.nombre_prod}}</h5>
+                        <h3 class="card-text">${{producto.precio_prod}}</h3>
+                        <input style="display: none;" value="{{producto.precio_prod}}" /><!--display: none/ hace que nose a los usuarios -->
+                        <a class="btn btn-dark">Comprar</a>
+                        <a class="btn btn-dark btn-agregar" onclick="agregarCarrito('Producto_{{producto.id_prod}}')">Añadir al Carrito</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor%}  
+        </div>
+        <script src="{% static 'alumnos/js/Carrito.js' %}"></script>
+    </section>
+
+
+    <!-- Pie de página -->
+    <footer class="bg-light text-center py-3">
+        <div class="container" id="contacto">
+            <div class="row">
+                <div class="col-md-4 order-md-1">
+                    <img src="{% static 'alumnos/img/phone-call.png' %}" alt="">
+                    <p>+569 12345678</p>
+                    <p>+569 87654321 </p>
+                </div>
+
+                <div class="col-md-4 order-md-1">
+                    <img src="{% static 'alumnos/img/mail.png' %}" alt="">
+                    <p>petshop@gmail.com</p>
+                </div>
+                <div class="col-md-4 order-md-1">
+                    <a href="https://es-la.facebook.com/">
+                        <img src="{% static 'alumnos/img/facebook.png' %}"alt="">
+                    </a>
+                    <a href="https://www.instagram.com/">
+                        <img src="{% static 'alumnos/img/instagram.png' %}" alt="">
+                    </a>
+                    <a href="https://web.whatsapp.com/">
+                        <img src="{% static 'alumnos/img/whatssapp-big-logo.png' %}" alt="">
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
