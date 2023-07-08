@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'alumnos/css/RL.css' %}">
+</head>
+<body background="{% static 'alumnos/css/Fondo.jfif' %}">
+    <div class="body" >
+        <div class="container">
+            <div class="header">
+                <h2>Iniciar Sesión</h2>
+            </div>
+            <form id="form" class="form" method="post">
+                {% csrf_token %}
+                <div class="form-control">
+                    <label for="id_username">Nombre Usuario</label>
+                    <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error message</small>
+                </div>
+                <div class="form-control">
+                    <label for="id_password">Contraseña</label>
+                    <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error message</small>
+                </div>
+                <button type = "submit">Iniciar Sesión</button>
+                <p>¿No tienes una cuenta? <a class="link" href="Registrarse.html">Registrate </a></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

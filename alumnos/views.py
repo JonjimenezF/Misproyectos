@@ -4,6 +4,9 @@ from alumnos.forms import AddProductoForm
 from alumnos.models import Producto
 from django.contrib.admin.views.decorators import staff_member_required#restrijir pagina
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as djlogin
 # Create your views here.
 def index(request):
     productos=Producto.objects.all() 
@@ -13,13 +16,33 @@ def index(request):
     return render(request, 'alumnos/index.html',context)#context ya lo contempla 
 
 
-def Login(request):
+def login(request):
     context = {} 
-    return render(request, 'alumnos/Login.html')
+    
+    return render(request, '../templates/registration/login.html')
 
-def Registrarse(request):
-    context = {} 
-    return render(request, 'alumnos/Registrarse.html')
+
+
+def registrar(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+        # Crear un nuevo usuario
+        if password == password2:
+            user = User.objects.create_user(username=username, password=password)
+            messages.success(request, "Te has registrado correctamente")
+            user = authenticate(username=username, password=password)
+            djlogin(request, user)
+            return redirect('index')
+        
+        else:
+            messages.success(request, "Contraseña no coinciden")
+            return render(request, '../templates/registration/registrar.html')
+            
+        # Redireccionar a una página de éxito o hacer cualquier otra acción requerida
+        
+    return render(request, '../templates/registration/registrar.html')
 
 def ProductoList(request):
     productos=Producto.objects.all() 
@@ -101,6 +124,9 @@ def EditarProducto(request, id):
         data["form"] = formulario
         
     return render(request, 'administrador/EditarProducto.html', data)
+
+#Creacion de usuarios
+
 
 # def Registrarse(request):
 #     context={}
